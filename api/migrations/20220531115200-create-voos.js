@@ -27,6 +27,7 @@ module.exports = {
       quantidade_de_assentos: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 5
       },
       preco: {
         type: Sequelize.FLOAT,

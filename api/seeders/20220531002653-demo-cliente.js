@@ -14,37 +14,37 @@ module.exports = {
       [
         {
           nome: "Carla gomes",
-          cpf: "48078246756",
+          cpf: 48078246756,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           nome: "Ghabriel Silva",
-          cpf: "48078256753",
+          cpf: 48078256753,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           nome: "Rafaela Von Trapp",
-          cpf: "48078246723",
+          cpf: 48078246723,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           nome: "George Ferreira",
-          cpf: "48078246753",
+          cpf: 48078246753,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           nome: "Ryan Araújo",
-          cpf: "38078246753",
+          cpf: 38078246753,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           nome: "Renato Lopes",
-          cpf: "48578246753",
+          cpf: 48578246753,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
