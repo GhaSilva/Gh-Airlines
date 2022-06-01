@@ -26,7 +26,6 @@ class PassagemController {
 
           //listar uma passagem
     static async pegaPassagensCompradas(req, res) {
-        const { comprado } = await req.params;
         try {
           const passagensCompradas = await database.Passagems.findAll({
             where: { comprado: Number(1) },
@@ -36,6 +35,41 @@ class PassagemController {
           return res.status(401).json(error.message);
         }
       }
+
+
+      static async pegaPassagensPorVoo(req, res) {
+        const { voo_id } = await req.params;
+        try {
+          const passagensPorVoo = await database.Passagems.findAll({
+            where: { voo_id: Number(voo_id) },
+          });
+          return res.status(200).json(passagensPorVoo);
+        } catch (error) {
+          return res.status(401).json(error.message);
+        }
+      }
+      static async pegaPassagensDisponiveisPorVoo(req, res) {
+        const { voo_id } = await req.params;
+        try {
+          const passagensDisponiveis = await database.Passagems.findAll({
+            where: { voo_id: Number(voo_id), comprado:false },
+          });
+          return res.status(200).json(passagensDisponiveis);
+        } catch (error) {
+          return res.status(401).json(error.message);
+        }
+      }
+
+      static async detalharPassagem(req, res) {
+        const { id } = await req.params;
+        try {
+          const passagens = await await database.Passagems.findAll({})
+          return res.status(200).json(passagens);
+        } catch (error) {
+          return res.status(401).json(error.message);
+        }
+      }
+
       static async pegaPassagensNaoCompradas(req, res) {
         const { comprado } = await req.params;
         try {

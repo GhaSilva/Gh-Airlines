@@ -14,6 +14,7 @@ class VoosController {
 
   static async pegaVoosDisponiveis(req, res) {
     try {
+      const passagensDisponiveis = await database.Passagems.findAll()
       const voosDisponiveis = await database.sequelize.query("SELECT * FROM `voos` where quantidade_de_assentos >= 1", { type: QueryTypes.SELECT });
       return res.status(200).json(voosDisponiveis);
     } catch (error) {

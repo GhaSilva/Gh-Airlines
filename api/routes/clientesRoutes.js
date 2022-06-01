@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/clientes', ClienteController.pegaTodosOsClientes)
 router.get('/clientes/:cpf', ClienteController.pegaUmClientePorCpf)
+router.get('/clientes/:id/passagens', ClienteController.pegaPassagemPorCliente)
 router.get('/clientes/:cpf/comprarpassagem/:id', ClienteController.compraPassagem)
 router.post('/clientes', ClienteController.criaCliente)
 router.put('/clientes/:id', ClienteController.atualizaCliente)

@@ -40,6 +40,18 @@ class ClienteController {
     }
   }
 
+  static async pegaPassagemPorCliente(req, res) {
+    const { id } = await req.params;
+    try {
+      const passagens = await database.Passagems.findAll({where: {comprador: Number(id)}})
+      return res.status(200).json(passagens);
+    } catch (error) {
+      return res.status(401).json(error.message);
+    }
+  }
+
+
+
     //listar um cliente só
     static async compraPassagem(req, res) {
       const { cpf, id } = await req.params;
