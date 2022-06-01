@@ -1,7 +1,6 @@
 const database = require("../models");
-const { QueryTypes } = require('sequelize');
 
-
+let assentos = 5
 class ClienteController {
   //listar todos os clientes
   static async pegaTodosOsClientes(req, res) {
@@ -13,7 +12,7 @@ class ClienteController {
     }
   }
 
-  //listar um cliente só
+  //Lista um cliente
   static async pegaUmCliente(req, res) {
     const { id } = await req.params;
     try {
@@ -26,8 +25,7 @@ class ClienteController {
     }
   }
 
-  
-  //listar um cliente só
+  //Lista cliente pelo cpf
   static async pegaUmClientePorCpf(req, res) {
     const { cpf } = await req.params;
     try {
@@ -40,6 +38,7 @@ class ClienteController {
     }
   }
 
+  //Lista passagem por id do cliente
   static async pegaPassagemPorCliente(req, res) {
     const { id } = await req.params;
     try {
@@ -50,10 +49,8 @@ class ClienteController {
     }
   }
 
-
-
-    //listar um cliente só
-    static async compraPassagem(req, res) {
+  //Compra passagem
+  static async compraPassagem(req, res) {
       const { cpf, id } = await req.params;
       try {
         const umCliente = await database.Clientes.findOne({
@@ -67,8 +64,12 @@ class ClienteController {
         if(passagem.comprado == true){
           return res.status(401).json({message: "Passagem não disponível"});
         }
+
+        
+        
         await database.Passagems.update(novasInfos, { where: { id: Number(id) } })
         await database.sequelize.query(`UPDATE passagems SET data_da_compra = now() WHERE id = ${id}`);
+        await database.sequelize.query(`UPDATE voos SET quantidade_de_assentos = ${assentos -= 1} WHERE id = ${passagem.voo_id}`);
 
         const PassagemAtualizada = await database.Passagems.findOne({
           where: { id: Number(id) },
@@ -78,9 +79,9 @@ class ClienteController {
       } catch (error) {
         return res.status(401).json(error.message);
       }
-    }
+  }
 
-  //criar um cliente
+  //Criar cliente
   static async criaCliente(req, res) {
     const novoCliente = req.body;
     try {
@@ -91,7 +92,7 @@ class ClienteController {
     }
   }
 
-  //atualizar um cliente
+  //Atualiza cliente
   static async atualizaCliente(req, res) {
     const { id } = req.params;
     const novasInfos = req.body;
@@ -106,6 +107,7 @@ class ClienteController {
     }
   }
 
+  //Apaga cliente
   static async apagaCliente(req, res){
     const { id } = req.params;
     try{

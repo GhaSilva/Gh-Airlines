@@ -3,7 +3,6 @@ const ClienteController = require("../controllers/ClienteController");
 
 const router = Router();
 
-
 router.get('/clientes', ClienteController.pegaTodosOsClientes)
 router.get('/clientes/:cpf', ClienteController.pegaUmClientePorCpf)
 router.get('/clientes/:id/passagens', ClienteController.pegaPassagemPorCliente)

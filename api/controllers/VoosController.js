@@ -1,8 +1,9 @@
 const database = require("../models");
-const Passagem = require("../models/passagem");
 const { QueryTypes } = require('sequelize');
 
 class VoosController {
+
+  //Lista todos os Voos
   static async pegaTodosOsVoos(req, res) {
     try {
       const todosOsVoos = await database.Voos.findAll();
@@ -12,9 +13,9 @@ class VoosController {
     }
   }
 
+  //Pega voos com passagens não compradas
   static async pegaVoosDisponiveis(req, res) {
     try {
-      const passagensDisponiveis = await database.Passagems.findAll()
       const voosDisponiveis = await database.sequelize.query("SELECT * FROM `voos` where quantidade_de_assentos >= 1", { type: QueryTypes.SELECT });
       return res.status(200).json(voosDisponiveis);
     } catch (error) {
@@ -34,6 +35,7 @@ class VoosController {
       return res.status(401).json(error.message);
     }
   }
+
   //criar um Voo
   static async criaVoo(req, res) {
     const novoVoo = req.body;
@@ -81,24 +83,6 @@ class VoosController {
     try {
       await database.Voos.destroy({ where: { id: Number(id) } });
       return res.status(200).json({ mensagem: `id ${id} deletado` });
-    } catch (error) {
-      return res.status(401).json(error.message);
-    }
-  }
-
-  static async criaAssentosDoVoo(req, res) {
-    try {
-      let ultimoId = await database.Voos.max("id");
-      let tudo = {};
-      for (let i = 1; i <= 5; i++) {
-        const data_da_compra = null;
-        const comprado = false;
-        const voo_id = Number(ultimoId);
-        const cadeira = Number(i);
-        const comprador = null;
-        tudo = { data_da_compra, comprado, voo_id, cadeira, comprador };
-        await database.Passagems.create(tudo);
-      }
     } catch (error) {
       return res.status(401).json(error.message);
     }
