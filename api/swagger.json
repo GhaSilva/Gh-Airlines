@@ -177,6 +177,14 @@
         "sumary": "Modificar Cliente",
         "description": "Essa rota será resposavel por realizar a atualização dos dados de um Cliente",
         "tags": ["Clientes"],
+        "parameters": [
+          {
+              "name": "id",
+              "in": "path",
+              "description": "ID do cliente para busca das passagens",
+              "required": true
+          }
+      ],
         "requestBody": {
           "content": {
             "application/json": {
