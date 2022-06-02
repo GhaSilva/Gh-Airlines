@@ -109,7 +109,7 @@
     "/clientes/{id}/passagens": {
       "get": {
         "sumary": "Detalha todas as passagens de um Cliente",
-        "description": "Essa rota será resposavel por detalhar todas as passagens compradas por um cliente apartir de seu CPF",
+        "description": "Essa rota será resposavel por detalhar todas as passagens compradas por um cliente apartir de seu ID",
         "tags": ["Clientes"],
         "parameters": [
             {
@@ -224,7 +224,20 @@
       "delete": {
         "sumary": "Apagar Cliente",
         "description": "Essa rota será resposavel por excluir um Cliente",
-        "tags": ["Clientes"]
+        "tags": ["Clientes"],
+        "parameters": [
+          {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Cliente para excluí-lo",
+              "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/voos": {
@@ -346,7 +359,20 @@
       "delete": {
         "sumary": "Apaga Voo por ID",
         "description": "Essa rota será resposavel por excluir um Voo pelo seu ID",
-        "tags": ["Voos"]
+        "tags": ["Voos"],
+        "parameters": [
+          {
+              "name": "id",
+              "in": "path",
+              "description": "ID do Voo para excluí-lo",
+              "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/passagens": {
