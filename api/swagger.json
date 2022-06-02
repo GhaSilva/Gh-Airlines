@@ -1,0 +1,640 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Gh-Airlines",
+    "description": "Essa API tem por objetivo a manipulação de dados de um Aeroporto",
+    "contact": {
+      "email": "ghabriel-silva@outlook.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/clientes": {
+      "post": {
+        "sumary": "Cadastro de cliente",
+        "description": "Essa rota será resposavel por cadastrar um novo Cliente",
+        "tags": ["Clientes"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cliente"
+              },
+              "examples": {
+                "cliente": {
+                  "value": {
+                    "nome": "Ghabriel Silva",
+                    "cpf": "12345678910"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unautorized"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "sumary": "Listagem de clientes",
+        "description": "Essa rota será resposavel por listar todos os Clientes",
+        "tags": ["Clientes"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{cpf}": {
+      "get": {
+        "sumary": "Detalhar cliente",
+        "description": "Essa rota será resposavel por detalhar um cliente pelo CPF",
+        "tags": ["Clientes"],
+        "parameters": [
+            {
+                "name": "cpf",
+                "in": "path",
+                "description": "CPF do cliente para busca",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{id}/passagens": {
+      "get": {
+        "sumary": "Detalha todas as passagens de um Cliente",
+        "description": "Essa rota será resposavel por detalhar todas as passagens compradas por um cliente apartir de seu CPF",
+        "tags": ["Clientes"],
+        "parameters": [
+            {
+                "name": "id",
+                "in": "path",
+                "description": "ID do cliente para busca das passagens",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{cpf}/comprarpassagem/{id}": {
+      "get": {
+        "sumary": "Compra de passagens",
+        "description": "Essa rota será resposavel por realizar a compra de uma passagem apartir do CPF do cliente e o ID da passagem",
+        "tags": ["Clientes"],
+        "parameters": [
+            {
+                "name": "cpf",
+                "in": "path",
+                "description": "CPF do cliente",
+                "required": true
+            },
+            {
+                "name": "id",
+                "in": "path",
+                "description": "ID da passagem",
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Passagem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+    },
+    "/clientes/{id}": {
+      "put": {
+        "sumary": "Modificar Cliente",
+        "description": "Essa rota será resposavel por realizar a atualização dos dados de um Cliente",
+        "tags": ["Clientes"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cliente"
+              },
+              "examples": {
+                "cliente": {
+                  "value": {
+                    "nome": "Ghabriel Silva",
+                    "cpf": "12345678910"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unautorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "sumary": "Apagar Cliente",
+        "description": "Essa rota será resposavel por excluir um Cliente",
+        "tags": ["Clientes"]
+      }
+    },
+    "/voos": {
+      "post": {
+        "sumary": "Criação de Voo",
+        "description": "Essa rota será resposavel por criar um Voo juntamente com suas passagens aéreas",
+        "tags": ["Voos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Voo"
+              },
+              "examples": {
+                "voo": {
+                  "value": {
+                    "horario_de_saida": "2022-05-31T17:21:40.000Z",
+                    "horario_de_chegada": "2022-05-31T17:21:40.000Z",
+                    "aeroporto_de_origem": "Congonhas",
+                    "aeroporto_de_destino": "Guarulhos",
+                    "preco": 150
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unautorized"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Voo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "sumary": "Listar Voos",
+        "description": "Essa rota será resposavel por listar todos os Voos",
+        "tags": ["Voos"],
+        "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Voo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+    },
+    "/voosdisponiveis": {
+      "get": {
+        "sumary": "Listar Voos disponíveis",
+        "description": "Essa rota será resposavel por listar todos os Voos disponíveis",
+        "tags": ["Voos"],
+        "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Voo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+    },
+    "/voos/{id}": {
+      "get": {
+        "sumary": "Listar Voos por ID",
+        "description": "Essa rota será resposavel por listar um Voo pelo seu ID",
+        "tags": ["Voos"],
+        "parameters": [
+            {
+                "name": "id",
+                "in": "path",
+                "description": "ID do Voo para busca",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Voo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "sumary": "Apaga Voo por ID",
+        "description": "Essa rota será resposavel por excluir um Voo pelo seu ID",
+        "tags": ["Voos"]
+      }
+    },
+    "/passagens": {
+      "get": {
+        "sumary": "Listar todas as passagens",
+        "description": "Essa rota será resposavel por listar todas as passagens",
+        "tags": ["Passagens"],
+        "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Passagem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+    },
+    "/passagenscompradas": {
+      "get": {
+        "sumary": "Listar todas as passagens compradas",
+        "description": "Essa rota será resposavel por listar todas as passagens compradas",
+        "tags": ["Passagens"],
+        "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Passagem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+    },
+    "/passagensnaocompradas": {
+      "get": {
+        "sumary": "Listar todas as passagens não compradas",
+        "description": "Essa rota será resposavel por listar todas as passagens não compradas",
+        "tags": ["Passagens"],
+        "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "items": {
+                      "$ref": "#/components/schemas/Passagem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+    },
+    "/detalharpassagem/{id}": {
+      "get": {
+        "sumary": "Detalha uma passagem pelo ID",
+        "description": "Essa rota será resposavel por detalhar uma passagem, mostrando também os dados de seu voo",
+        "tags": ["Passagens"],
+        "parameters": [
+            {
+                "name": "id",
+                "in": "path",
+                "description": "ID da passagem a ser detalhada",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Passagem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passagensporcliente/{comprador}": {
+      "get": {
+        "sumary": "Listar todas as passagens de um cliente pelo seu ID",
+        "description": "Essa rota será resposavel por listar todas as passagens de um cliente pelo seu ID",
+        "tags": ["Passagens"],
+        "parameters": [
+            {
+                "name": "comprador",
+                "in": "path",
+                "description": "ID do comprador, para listar as passagens que o mesmo comprou",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Passagem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passagensporvoo/{voo_id}": {
+      "get": {
+        "sumary": "Listar todas as passagens de um de um voo pelo seu ID",
+        "description": "Essa rota será resposavel por listar todas as passagens de um voo pelo seu ID",
+        "tags": ["Passagens"],
+        "parameters": [
+            {
+                "name": "voo_id",
+                "in": "path",
+                "description": "ID do voo para listar suas passagens",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Passagem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passagensdisponivelporvoo/{voo_id}": {
+      "get": {
+        "sumary": "Listar todas as passagens disponíveis de um de um voo pelo seu ID",
+        "description": "Essa rota será resposavel por listar todas as passagens disponíveis de um voo pelo seu ID",
+        "tags": ["Passagens"],
+        "parameters": [
+            {
+                "name": "voo_id",
+                "in": "path",
+                "description": "ID do voo, para mostrar suas passagens disponíveis",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Passagem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passagens/{id}": {
+      "get": {
+        "sumary": "Listar uma passagem pelo ID",
+        "description": "Essa rota será resposavel por listar uma passagem pelo seu ID",
+        "tags": ["Passagens"],
+        "parameters": [
+            {
+                "name": "id",
+                "in": "path",
+                "description": "ID da passagem para busca",
+                "required": true
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Passagem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Cliente": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "number"
+          }
+        }
+      },
+      "Voo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "horario_de_saida": {
+            "type": "string"
+          },
+          "horario_de_chegada": {
+            "type": "string"
+          },
+          "aeroporto_de_origem": {
+            "type": "string"
+          },
+          "aeroporto_de_destino": {
+            "type": "string"
+          },
+          "quantidade_de_assentos": {
+            "type": "number"
+          },
+          "preco": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Passagem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "data_da_compra": {
+            "type": "string"
+          },
+          "comprado": {
+            "type": "boolean"
+          },
+          "cadeira": {
+            "type": "number"
+          },
+          "comprador": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "voo_id": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

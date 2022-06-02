@@ -81,6 +81,7 @@ class VoosController {
   static async apagaVoo(req, res) {
     const { id } = req.params;
     try {
+      await database.Passagems.destroy({ where: { voo_id: Number(id) } });
       await database.Voos.destroy({ where: { id: Number(id) } });
       return res.status(200).json({ mensagem: `id ${id} deletado` });
     } catch (error) {

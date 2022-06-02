@@ -11,6 +11,5 @@ router.get('/passagens/:id', PassagemController.pegaUmaPassagem)
 router.get('/passagensporvoo/:voo_id', PassagemController.pegaPassagensPorVoo)
 router.get('/passagensdisponivelporvoo/:voo_id', PassagemController.pegaPassagensDisponiveisPorVoo)
 router.get('/detalharpassagem/:id', PassagemController.detalharPassagem)
-router.delete('/passagens/:id', PassagemController.apagaPassagem)
 
 module.exports = router
